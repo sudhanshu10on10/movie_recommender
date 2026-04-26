@@ -1,4 +1,4 @@
-# Movie Recommender System
+# Movie Recommender System with end-to-end deployment
 
 A content-based movie recommender system built with Python and Streamlit that suggests similar movies based on your selection.
 
