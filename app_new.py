@@ -2,6 +2,15 @@ import streamlit as st
 import pickle
 import pandas as pd
 import requests
+import gdown
+import os
+
+# Download FIRST before loading
+if not os.path.exists('movies_dict.pkl'):
+    gdown.download('https://drive.google.com/uc?id=1kPaH0pn4P6-3s50xTt_n1bsVDN-BrcKU', 'movies_dict.pkl', quiet=False)
+
+if not os.path.exists('similarity.pkl'):
+    gdown.download('https://drive.google.com/uc?id=1Gq4S0LaXLguMIdTpltN4Ftw-d5C2BpFO', 'similarity.pkl', quiet=False)
 
 def fetchposter(movie_id):
     response = requests.get(
@@ -16,36 +25,22 @@ def recommend(movie):
     movie_index = movies[movies['title'] == movie].index[0]
     distances = similarity[movie_index]
     movies_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[1:6]
-
     recommended_movies = []
     recommended_movies_posters = []
-
     for i in movies_list:
         movie_id = movies.iloc[i[0]].movie_id
         recommended_movies.append(movies.iloc[i[0]].title)
         recommended_movies_posters.append(fetchposter(movie_id))
     return recommended_movies, recommended_movies_posters
 
-# Pickle Inputs
+# Load AFTER downloading
 movies_dict = pickle.load(open('movies_dict.pkl', 'rb'))
 movies = pd.DataFrame(movies_dict)
 similarity = pickle.load(open('similarity.pkl', 'rb'))
 
-import gdown
-import os
-
-if not os.path.exists('movies_dict.pkl'):
-    gdown.download('https://drive.google.com/file/d/1kPaH0pn4P6-3s50xTt_n1bsVDN-BrcKU/view?usp=sharing', 'movies_dict.pkl', quiet=False)
-
-if not os.path.exists('similarity.pkl'):
-    gdown.download('https://drive.google.com/file/d/1Gq4S0LaXLguMIdTpltN4Ftw-d5C2BpFO/view?usp=sharing', 'similarity.pkl', quiet=False)
-
 # Website
 st.title('Movie Recommender System')
-selected_movie_name = st.selectbox(
-    'Select a Movie',
-    movies['title'].values
-)
+selected_movie_name = st.selectbox('Select a Movie', movies['title'].values)
 
 if st.button("Recommend"):
     names, posters = recommend(selected_movie_name)
@@ -61,7 +56,6 @@ if st.button("Recommend"):
         st.image(posters[2])
     with col4:
         st.text(names[3])
-        
         st.image(posters[3])
     with col5:
         st.text(names[4])
