@@ -24,4 +24,9 @@ streamlit run app.py
 ```
 
 ## Dataset
-Based on the TMDB 5000 Movies dataset from Kaggle.
+- Dataset: TMDB 5000 Movies from Kaggle
+- Download from: https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata
+
+## Other Files
+- Cosine Similarity Matrix - https://drive.google.com/file/d/1Gq4S0LaXLguMIdTpltN4Ftw-d5C2BpFO/view?usp=drive_link
+- Movies Dictionary - https://drive.google.com/file/d/1kPaH0pn4P6-3s50xTt_n1bsVDN-BrcKU/view?usp=drive_link
