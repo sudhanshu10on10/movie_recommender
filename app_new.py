@@ -5,7 +5,7 @@ import requests
 import gdown
 import os
 
-# Download FIRST before loading
+# Download before loading
 if not os.path.exists('movies_dict.pkl'):
     gdown.download('https://drive.google.com/uc?id=1kPaH0pn4P6-3s50xTt_n1bsVDN-BrcKU', 'movies_dict.pkl', quiet=False)
 
@@ -33,7 +33,7 @@ def recommend(movie):
         recommended_movies_posters.append(fetchposter(movie_id))
     return recommended_movies, recommended_movies_posters
 
-# Load AFTER downloading
+# Load after downloading
 movies_dict = pickle.load(open('movies_dict.pkl', 'rb'))
 movies = pd.DataFrame(movies_dict)
 similarity = pickle.load(open('similarity.pkl', 'rb'))
